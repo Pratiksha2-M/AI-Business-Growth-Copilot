@@ -4,7 +4,7 @@ import { MessageSquare, Phone, Bell, Send, Check } from 'lucide-react';
 export default function Insights({ database, t, lang }) {
   const { sales, expenses, inventory } = database;
   const [alertsEnabled, setAlertsEnabled] = useState(true);
-  const [frequency, setFrequency] = useState('weekly');
+  const [frequency, setFrequency] = useState('daily'); // Default set to daily
   const [phoneNumber, setPhoneNumber] = useState('918356077864');
   const [testSent, setTestSent] = useState(false);
 
@@ -15,23 +15,27 @@ export default function Insights({ database, t, lang }) {
   const lowStock = inventory.filter(i => i.stock < i.minStock).map(i => i.name).join(', ');
 
   const getWhatsAppMessageText = () => {
+    const freqTitleHi = frequency === 'daily' ? 'दैनिक' : frequency === 'monthly' ? 'मासिक' : 'साप्ताहिक';
+    const freqTitleEn = frequency === 'daily' ? 'Daily' : frequency === 'monthly' ? 'Monthly' : 'Weekly';
+    const freqTitleEs = frequency === 'daily' ? 'Diario' : frequency === 'monthly' ? 'Mensual' : 'Semanal';
+
     const brandName = lang === 'hi' ? 'Brewtopia कैफ़े' : lang === 'es' ? 'Café Brewtopia' : 'Brewtopia Café';
     const profitEmoji = netProfit >= 0 ? '📈' : '📉';
 
     if (lang === 'hi') {
-      return `📊 *${brandName} - साप्ताहिक रिपोर्ट* 📊
+      return `📊 *${brandName} - ${freqTitleHi} रिपोर्ट* 📊
 
-💰 *कमाई:* ₹${totalRev.toLocaleString()}
-💸 *खर्च:* ₹${totalExp.toLocaleString()}
+💰 *आज की कमाई:* ₹${totalRev.toLocaleString()}
+💸 *आज का खर्च:* ₹${totalExp.toLocaleString()}
 ${profitEmoji} *शुद्ध लाभ:* ₹${netProfit.toLocaleString()}
 
 ⚠️ *स्टॉक अलर्ट:* ${lowStock || 'सभी वस्तुएं सुरक्षित हैं'}
 
-🤖 *एआई सुझाव:* आपके 'Milk' का स्टॉक कम है। शनिवार की सेल को देखते हुए कृपया आज ही रीस्टॉक करें।
+🤖 *एआई सुझाव:* आपके 'Milk' का स्टॉक कम है। आज ही रीस्टॉक करें।
 
 _भेजा गया: एआई बिजनेस ग्रोथ कोपायलट द्वारा_`;
     } else if (lang === 'es') {
-      return `📊 *${brandName} - Resumen Semanal* 📊
+      return `📊 *${brandName} - Resumen ${freqTitleEs}* 📊
 
 💰 *Ventas:* ₹${totalRev.toLocaleString()}
 💸 *Gastos:* ₹${totalExp.toLocaleString()}
@@ -39,11 +43,11 @@ ${profitEmoji} *Ganancia Neta:* ₹${netProfit.toLocaleString()}
 
 ⚠️ *Alertas de Stock:* ${lowStock || 'Ninguno, stock saludable'}
 
-🤖 *Consejo AI:* Su stock de leche está por agotarse. Ordene hoy para evitar desabastecimiento el fin de semana.
+🤖 *Consejo AI:* Su stock de leche está por agotarse. Ordene hoy.
 
 _Generado por AI Business Copilot_`;
     } else {
-      return `📊 *${brandName} - Weekly Report* 📊
+      return `📊 *${brandName} - ${freqTitleEn} Report* 📊
 
 💰 *Revenue:* ₹${totalRev.toLocaleString()}
 💸 *Expenses:* ₹${totalExp.toLocaleString()}
@@ -51,7 +55,7 @@ ${profitEmoji} *Net Profit:* ₹${netProfit.toLocaleString()}
 
 ⚠️ *Stock Alerts:* ${lowStock || 'All items healthy'}
 
-🤖 *AI Suggestion:* Milk inventory is low. Restock today to avoid missing weekend morning sales.
+🤖 *AI Suggestion:* Milk inventory is low. Restock today to avoid missing peak morning sales.
 
 _Sent via AI Business Growth Copilot_`;
     }
@@ -72,7 +76,7 @@ _Sent via AI Business Growth Copilot_`;
         <div>
           <h1 style={{ fontSize: '2rem', marginBottom: '0.25rem' }}>{t('businessInsightsAlerts')}</h1>
           <p style={{ color: 'var(--text-secondary)' }}>
-            {lang === 'hi' ? 'व्हाट्सएप या ईमेल के माध्यम से अपने फोन पर साप्ताहिक व्यापार सारांश प्राप्त करें।' : lang === 'es' ? 'Reciba resúmenes semanales de su negocio directamente en WhatsApp o correo electrónico.' : 'Receive automated performance summaries and stock alerts directly on your phone.'}
+            {lang === 'hi' ? 'व्हाट्सएप या ईमेल के माध्यम से अपने फोन पर दैनिक व्यापार सारांश प्राप्त करें।' : lang === 'es' ? 'Reciba resúmenes diarios de su negocio directamente en WhatsApp o correo electrónico.' : 'Receive automated daily performance summaries and stock alerts directly on your phone.'}
           </p>
         </div>
       </div>
@@ -155,7 +159,7 @@ _Sent via AI Business Growth Copilot_`;
               className="btn btn-primary"
               onClick={handleSendTest}
             >
-              <Send size={16} /> Send Real WhatsApp Alert to {phoneNumber}
+              <Send size={16} /> Send {frequency.toUpperCase()} WhatsApp Alert to {phoneNumber}
             </button>
           </div>
           
