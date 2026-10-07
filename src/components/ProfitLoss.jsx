@@ -22,9 +22,7 @@ export default function ProfitLoss({ database, t, lang }) {
   // Output GST (collected on sales)
   const totalOutputGst = sales.reduce((sum, item) => sum + (item.gst || 0), 0);
   // Input GST (paid on expenses, assume invoice values include GST)
-  // Let's assume expenses had a GST component. We'll simulate 18% of inventory/utilities/marketing expenses as Input GST (ITC)
   const simulatedInputGst = expenses.reduce((sum, item) => {
-    // If it's a raw material or utility expense, it typically carries GST (e.g. 18%)
     if (['Inventory', 'Utilities', 'Marketing'].includes(item.category)) {
       return sum + (item.amount * (gstRate / (100 + gstRate)));
     }
@@ -105,7 +103,11 @@ export default function ProfitLoss({ database, t, lang }) {
             <thead>
               <tr>
                 <th>{t('particulars')}</th>
-                <th style={{ text              <tr>
+                <th style={{ textAlign: 'right' }}>{t('amount')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
                 <td style={{ fontWeight: 600 }}>{lang === 'hi' ? 'सकल बिक्री (राजस्व)' : lang === 'es' ? 'Ventas Brutas' : 'Gross Sales (Revenue)'}</td>
                 <td style={{ textAlign: 'right', color: 'var(--accent-emerald)', fontWeight: 600 }}>₹{grossSales.toLocaleString()}</td>
               </tr>
@@ -154,11 +156,6 @@ export default function ProfitLoss({ database, t, lang }) {
                 </td>
                 <td style={{ textAlign: 'right', fontWeight: 700, fontSize: '1rem', color: netProfitBeforeTax >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>
                   {netProfitBeforeTax >= 0 ? '' : '-'}₹{Math.abs(netProfitBeforeTax).toLocaleString()}
-                </td>
-              </tr>Operativa' : 'Net Operating Profit'}
-                </td>
-                <td style={{ textAlign: 'right', fontWeight: 700, fontSize: '1rem', color: netProfitBeforeTax >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>
-                  {netProfitBeforeTax >= 0 ? '' : '-'}${Math.abs(netProfitBeforeTax).toLocaleString()}
                 </td>
               </tr>
             </tbody>
