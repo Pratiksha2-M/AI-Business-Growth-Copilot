@@ -20,9 +20,9 @@ export default function Insights({ database, t, lang }) {
     if (lang === 'hi') {
       return `📊 *${brandName} - साप्ताहिक रिपोर्ट* 📊
 
-💰 *कमाई:* $${totalRev.toLocaleString()}
-💸 *खर्च:* $${totalExp.toLocaleString()}
-${profitEmoji} *शुद्ध लाभ:* $${netProfit.toLocaleString()}
+💰 *कमाई:* ₹${totalRev.toLocaleString()}
+💸 *खर्च:* ₹${totalExp.toLocaleString()}
+${profitEmoji} *शुद्ध लाभ:* ₹${netProfit.toLocaleString()}
 
 ⚠️ *स्टॉक अलर्ट:* ${lowStock || 'सभी वस्तुएं सुरक्षित हैं'}
 
@@ -32,9 +32,9 @@ _भेजा गया: एआई बिजनेस ग्रोथ कोप�
     } else if (lang === 'es') {
       return `📊 *${brandName} - Resumen Semanal* 📊
 
-💰 *Ventas:* $${totalRev.toLocaleString()}
-💸 *Gastos:* $${totalExp.toLocaleString()}
-${profitEmoji} *Ganancia Neta:* $${netProfit.toLocaleString()}
+💰 *Ventas:* ₹${totalRev.toLocaleString()}
+💸 *Gastos:* ₹${totalExp.toLocaleString()}
+${profitEmoji} *Ganancia Neta:* ₹${netProfit.toLocaleString()}
 
 ⚠️ *Alertas de Stock:* ${lowStock || 'Ninguno, stock saludable'}
 
@@ -44,9 +44,9 @@ _Generado por AI Business Copilot_`;
     } else {
       return `📊 *${brandName} - Weekly Report* 📊
 
-💰 *Revenue:* $${totalRev.toLocaleString()}
-💸 *Expenses:* $${totalExp.toLocaleString()}
-${profitEmoji} *Net Profit:* $${netProfit.toLocaleString()}
+💰 *Revenue:* ₹${totalRev.toLocaleString()}
+💸 *Expenses:* ₹${totalExp.toLocaleString()}
+${profitEmoji} *Net Profit:* ₹${netProfit.toLocaleString()}
 
 ⚠️ *Stock Alerts:* ${lowStock || 'All items healthy'}
 

@@ -41,7 +41,7 @@ export default function ProfitLoss({ database, t, lang }) {
     csvRows.push(["AI Business Growth Copilot - Profit & Loss Statement"]);
     csvRows.push([`Date Generated: ${new Date().toLocaleDateString()}`]);
     csvRows.push([]);
-    csvRows.push(["Particulars", "Amount ($)"]);
+    csvRows.push(["Particulars", "Amount (₹)"]);
     
     // Rows
     csvRows.push(["Revenue (Sales)", grossSales]);
@@ -105,23 +105,19 @@ export default function ProfitLoss({ database, t, lang }) {
             <thead>
               <tr>
                 <th>{t('particulars')}</th>
-                <th style={{ textAlign: 'right' }}>{t('amount')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
+                <th style={{ text              <tr>
                 <td style={{ fontWeight: 600 }}>{lang === 'hi' ? 'सकल बिक्री (राजस्व)' : lang === 'es' ? 'Ventas Brutas' : 'Gross Sales (Revenue)'}</td>
-                <td style={{ textAlign: 'right', color: 'var(--accent-emerald)', fontWeight: 600 }}>${grossSales.toLocaleString()}</td>
+                <td style={{ textAlign: 'right', color: 'var(--accent-emerald)', fontWeight: 600 }}>₹{grossSales.toLocaleString()}</td>
               </tr>
               <tr>
                 <td style={{ paddingLeft: '1.5rem', color: 'var(--text-secondary)' }}>
                   {lang === 'hi' ? 'घटाएं: बेचे गए माल की लागत (COGS)' : lang === 'es' ? 'Menos: Costo de Ventas (COGS)' : 'Less: Cost of Goods Sold (COGS)'}
                 </td>
-                <td style={{ textAlign: 'right', color: 'var(--accent-rose)' }}>-${cogs.toLocaleString()}</td>
+                <td style={{ textAlign: 'right', color: 'var(--accent-rose)' }}>-₹{cogs.toLocaleString()}</td>
               </tr>
               <tr style={{ borderTop: '1px solid var(--card-border)', borderBottom: '2px solid var(--card-border)' }}>
                 <td style={{ fontWeight: 600 }}>{lang === 'hi' ? 'सकल लाभ' : lang === 'es' ? 'Ganancia Bruta' : 'Gross Profit'}</td>
-                <td style={{ textAlign: 'right', fontWeight: 600 }}>${grossProfit.toLocaleString()}</td>
+                <td style={{ textAlign: 'right', fontWeight: 600 }}>₹{grossProfit.toLocaleString()}</td>
               </tr>
               
               {/* Operating Expenses */}
@@ -131,30 +127,35 @@ export default function ProfitLoss({ database, t, lang }) {
               </tr>
               <tr>
                 <td style={{ paddingLeft: '1.5rem', color: 'var(--text-secondary)' }}>{lang === 'hi' ? 'बिजली, पानी व अन्य उपयोगिता' : lang === 'es' ? 'Servicios Públicos' : 'Utilities'}</td>
-                <td style={{ textAlign: 'right' }}>${utilities.toLocaleString()}</td>
+                <td style={{ textAlign: 'right' }}>₹{utilities.toLocaleString()}</td>
               </tr>
               <tr>
                 <td style={{ paddingLeft: '1.5rem', color: 'var(--text-secondary)' }}>{lang === 'hi' ? 'किराया' : lang === 'es' ? 'Alquiler' : 'Rent'}</td>
-                <td style={{ textAlign: 'right' }}>${rent.toLocaleString()}</td>
+                <td style={{ textAlign: 'right' }}>₹{rent.toLocaleString()}</td>
               </tr>
               <tr>
                 <td style={{ paddingLeft: '1.5rem', color: 'var(--text-secondary)' }}>{lang === 'hi' ? 'विज्ञापन व विपणन' : lang === 'es' ? 'Publicidad y Marketing' : 'Marketing'}</td>
-                <td style={{ textAlign: 'right' }}>${marketing.toLocaleString()}</td>
+                <td style={{ textAlign: 'right' }}>₹{marketing.toLocaleString()}</td>
               </tr>
               <tr>
                 <td style={{ paddingLeft: '1.5rem', color: 'var(--text-secondary)' }}>{lang === 'hi' ? 'अन्य विविध व्यय' : lang === 'es' ? 'Otros Gastos' : 'Other Expenses'}</td>
-                <td style={{ textAlign: 'right' }}>${otherExpenses.toLocaleString()}</td>
+                <td style={{ textAlign: 'right' }}>₹{otherExpenses.toLocaleString()}</td>
               </tr>
               
               <tr style={{ borderTop: '1px solid var(--card-border)' }}>
                 <td style={{ fontWeight: 600 }}>{lang === 'hi' ? 'कुल परिचालन व्यय' : lang === 'es' ? 'Total Gastos Operativos' : 'Total Operating Expenses'}</td>
-                <td style={{ textAlign: 'right', color: 'var(--accent-rose)', fontWeight: 600 }}>-${totalOperatingExpenses.toLocaleString()}</td>
+                <td style={{ textAlign: 'right', color: 'var(--accent-rose)', fontWeight: 600 }}>-₹{totalOperatingExpenses.toLocaleString()}</td>
               </tr>
               
               {/* Net Profit */}
               <tr style={{ borderTop: '2px solid var(--accent-purple)', background: 'rgba(139, 92, 246, 0.04)' }}>
                 <td style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--accent-purple)' }}>
                   {lang === 'hi' ? 'शुद्ध परिचालन लाभ' : lang === 'es' ? 'Ganancia Neta Operativa' : 'Net Operating Profit'}
+                </td>
+                <td style={{ textAlign: 'right', fontWeight: 700, fontSize: '1rem', color: netProfitBeforeTax >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>
+                  {netProfitBeforeTax >= 0 ? '' : '-'}₹{Math.abs(netProfitBeforeTax).toLocaleString()}
+                </td>
+              </tr>Operativa' : 'Net Operating Profit'}
                 </td>
                 <td style={{ textAlign: 'right', fontWeight: 700, fontSize: '1rem', color: netProfitBeforeTax >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>
                   {netProfitBeforeTax >= 0 ? '' : '-'}${Math.abs(netProfitBeforeTax).toLocaleString()}
@@ -197,7 +198,7 @@ export default function ProfitLoss({ database, t, lang }) {
                     {lang === 'hi' ? 'आउटपुट जीएसटी (बिक्री पर)' : lang === 'es' ? 'IGV de Ventas' : 'Output GST (Collected on Sales)'}
                   </div>
                   <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent-emerald)', marginTop: '0.25rem' }}>
-                    ${totalOutputGst.toFixed(2)}
+                    ₹{totalOutputGst.toFixed(2)}
                   </div>
                 </div>
                 <span className="badge badge-success">Output Tax</span>
@@ -210,7 +211,7 @@ export default function ProfitLoss({ database, t, lang }) {
                     {lang === 'hi' ? 'इनपुट टैक्स क्रेडिट (खरीद पर)' : lang === 'es' ? 'Crédito Fiscal (IGV compras)' : 'Input Tax Credit (GST Claimable)'}
                   </div>
                   <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent-blue)', marginTop: '0.25rem' }}>
-                    ${simulatedInputGst.toFixed(2)}
+                    ₹{simulatedInputGst.toFixed(2)}
                   </div>
                 </div>
                 <span className="badge badge-info">Input Credit</span>
@@ -223,7 +224,7 @@ export default function ProfitLoss({ database, t, lang }) {
                     {lang === 'hi' ? 'कुल देय जीएसटी (सरकार को)' : lang === 'es' ? 'Impuesto Neto a Pagar' : 'Net GST Payable (to Government)'}
                   </div>
                   <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--accent-purple)', marginTop: '0.25rem' }}>
-                    ${netGstPayable.toFixed(2)}
+                    ₹{netGstPayable.toFixed(2)}
                   </div>
                 </div>
                 <span className="badge badge-warning" style={{ color: '#fff', background: 'var(--accent-purple)' }}>
@@ -241,10 +242,10 @@ export default function ProfitLoss({ database, t, lang }) {
               </h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                 {lang === 'hi' 
-                  ? `सुनिश्चित करें कि आप अपने सप्लायर इनवॉइस को 'Expenses & OCR' में अपलोड कर रहे हैं। आपके इनपुट टैक्स क्रेडिट ($${simulatedInputGst.toFixed(0)}) से इस महीने आपके टैक्स में काफी बचत हुई है!`
+                  ? `सुनिश्चित करें कि आप अपने सप्लायर इनवॉइस को 'Expenses & OCR' में अपलोड कर रहे हैं। आपके इनपुट टैक्स क्रेडिट (₹${simulatedInputGst.toFixed(0)}) से इस महीने आपके टैक्स में काफी बचत हुई है!`
                   : lang === 'es'
-                  ? `Asegúrese de cargar todas las facturas de proveedores. ¡Su crédito fiscal de $${simulatedInputGst.toFixed(0)} redujo significativamente el impuesto a pagar de este período!`
-                  : `Make sure to upload all your supplier invoices. Your Input Tax Credit of $${simulatedInputGst.toFixed(0)} has significantly reduced the net GST payable this month!`
+                  ? `Asegúrese de cargar todas las facturas de proveedores. ¡Su crédito fiscal de ₹${simulatedInputGst.toFixed(0)} redujo significativamente el impuesto a pagar de este período!`
+                  : `Make sure to upload all your supplier invoices. Your Input Tax Credit of ₹${simulatedInputGst.toFixed(0)} has significantly reduced the net GST payable this month!`
                 }
               </p>
             </div>

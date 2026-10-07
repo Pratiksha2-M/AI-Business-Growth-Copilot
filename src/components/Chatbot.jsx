@@ -32,9 +32,9 @@ export default function Chatbot({ database, apiKey, t, lang }) {
     const lowStock = inventory.filter(i => i.stock < i.minStock).map(i => `${i.name} (Stock: ${i.stock})`).join(', ');
 
     return `You are a virtual business growth consultant. Here is the current financial state of the small business:
-- Total Sales: $${totalRev}
-- Total Expenses: $${totalExp}
-- Net Profit: $${profit}
+- Total Sales: ₹${totalRev}
+- Total Expenses: ₹${totalExp}
+- Net Profit: ₹${profit}
 - Low Stock Items: ${lowStock || 'None'}
 - Top Selling items: Coffee, Cappuccino, Lattes, Milk.
 Keep your answers brief (under 100 words), highly actionable, and friendly. Provide calculations if needed. Speak in the user's language (Language code: ${lang}).`;
@@ -51,7 +51,7 @@ Keep your answers brief (under 100 words), highly actionable, and friendly. Prov
 
     if (lang === 'hi') {
       if (q.includes('बिक्री') || q.includes('कम') || q.includes('सेल')) {
-        return `हमारी बिक्री का विश्लेषण करने पर पता चलता है कि कुल राजस्व $${totalRev} है। मुख्य गिरावट सप्ताह 6 में थी जब कैपुचीनो की मांग घटी थी। आगामी सप्ताह में ग्राहकों को आकर्षित करने के लिए सुबह 9-11 बजे 'हैप्पी आवर' छूट या कूपन लॉन्च करने की सलाह दी जाती है।`;
+        return `हमारी बिक्री का विश्लेषण करने पर पता चलता है कि कुल राजस्व ₹${totalRev} है। मुख्य गिरावट सप्ताह 6 में थी जब कैपुचीनो की मांग घटी थी। आगामी सप्ताह में ग्राहकों को आकर्षित करने के लिए सुबह 9-11 बजे 'हैप्पी आवर' छूट या कूपन लॉन्च करने की सलाह दी जाती है।`;
       }
       if (q.includes('स्टॉक') || q.includes('सामग्री') || q.includes('मिल्क') || q.includes('दूध')) {
         const low = inventory.filter(i => i.stock < i.minStock);
@@ -61,12 +61,12 @@ Keep your answers brief (under 100 words), highly actionable, and friendly. Prov
         return "आपका स्टॉक स्तर वर्तमान में ठीक है। कोई भी आवश्यक सामग्री अभी समाप्त होने के कगार पर नहीं है।";
       }
       if (q.includes('मुनाफा') || q.includes('प्रॉफिट') || q.includes('नुकसान')) {
-        return `आपका शुद्ध लाभ $${profit} है और कुल खर्च $${totalExp} है। खर्चे घटाने के लिए अपने 'Inventory' खर्च (जो कि कुल खर्चों का सबसे बड़ा हिस्सा है) को सुव्यवस्थित करें और थोक विक्रेताओं से बातचीत करें।`;
+        return `आपका शुद्ध लाभ ₹${profit} है और कुल खर्च ₹${totalExp} है। खर्चे घटाने के लिए अपने 'Inventory' खर्च (जो कि कुल खर्चों का सबसे बड़ा हिस्सा है) को सुव्यवस्थित करें और थोक विक्रेताओं से बातचीत करें।`;
       }
       return "दिलचस्प सवाल है! मैं एक बिज़नेस कंसलटेंट हूँ। आप मुझसे पूछ सकते हैं: 1. मेरी बिक्री कैसे बढ़ाएं? 2. स्टॉक अलर्ट क्या हैं? 3. मुनाफा बढ़ाने के तरीके?";
     } else if (lang === 'es') {
       if (q.includes('ventas') || q.includes('bajar') || q.includes('vender')) {
-        return `Nuestros datos muestran ventas acumuladas de $${totalRev}. Hubo una caída leve en la Semana 6, pero se recuperó en la Semana 7. Para acelerar las ventas, le sugiero lanzar un combo 'Desayuno Express' (Café + Tostada) para los clientes apurados.`;
+        return `Nuestros datos muestran ventas acumuladas de ₹${totalRev}. Hubo una caída leve en la Semana 6, pero se recuperó en la Semana 7. Para acelerar las ventas, le sugiero lanzar un combo 'Desayuno Express' (Café + Tostada) para los clientes apurados.`;
       }
       if (q.includes('stock') || q.includes('inventario') || q.includes('leche')) {
         const low = inventory.filter(i => i.stock < i.minStock);
@@ -76,13 +76,13 @@ Keep your answers brief (under 100 words), highly actionable, and friendly. Prov
         return "Sus niveles de stock están saludables. Ningún producto corre riesgo de desabastecimiento inmediato.";
       }
       if (q.includes('ganancia') || q.includes('rentabilidad') || q.includes('gastos')) {
-        return `Su ganancia neta es de $${profit} sobre un gasto total de $${totalExp}. Para mejorar los márgenes, intente optimizar los insumos con un nuevo proveedor mayorista de vasos y granos.`;
+        return `Su ganancia neta es de ₹${profit} sobre un gasto total de ₹${totalExp}. Para mejorar los márgenes, intente optimizar los insumos con un nuevo proveedor mayorista de vasos y granos.`;
       }
       return "¡Excelente pregunta! Como su consultor virtual, puedo ayudarle con: 1. Estrategias de ventas, 2. Alertas de inventario, 3. Análisis de costos y rentabilidad.";
     } else {
       // English Default
       if (q.includes('sale') || q.includes('drop') || q.includes('revenue') || q.includes('grow')) {
-        return `Our analytics show total sales of $${totalRev}. Week 6 had a slight dip, but Week 7/8 bounced back by 8%. To accelerate growth, launch a 'Midweek Coffee Treat' promotion on Wednesdays (traditionally your slowest day) offering 15% off large lattes.`;
+        return `Our analytics show total sales of ₹${totalRev}. Week 6 had a slight dip, but Week 7/8 bounced back by 8%. To accelerate growth, launch a 'Midweek Coffee Treat' promotion on Wednesdays (traditionally your slowest day) offering 15% off large lattes.`;
       }
       if (q.includes('stock') || q.includes('inventory') || q.includes('order') || q.includes('milk')) {
         const low = inventory.filter(i => i.stock < i.minStock);
@@ -92,7 +92,7 @@ Keep your answers brief (under 100 words), highly actionable, and friendly. Prov
         return "All stock levels are healthy! No inventory run-outs predicted for the next 5 days based on usage speed.";
       }
       if (q.includes('profit') || q.includes('margin') || q.includes('expense') || q.includes('cost')) {
-        return `Your net profit stands at $${profit} with expenses of $${totalExp}. Operating margin is ${((profit/totalRev)*100).toFixed(1)}%. To increase profit, negotiate bulk terms on Coffee Beans (our highest expense) and optimize utility usage during non-peak hours.`;
+        return `Your net profit stands at ₹${profit} with expenses of ₹${totalExp}. Operating margin is ${((profit/totalRev)*100).toFixed(1)}%. To increase profit, negotiate bulk terms on Coffee Beans (our highest expense) and optimize utility usage during non-peak hours.`;
       }
       return "I can help you review performance! Ask me questions like: 'Why did my sales drop last week?', 'What are my stock warnings?', or 'How can I lower my utility bills?'";
     }

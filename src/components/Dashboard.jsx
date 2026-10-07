@@ -210,7 +210,7 @@ export default function Dashboard({ database, t, lang }) {
         <div className="glass-card kpi-card">
           <div className="kpi-details">
             <h3>{t('revenue')}</h3>
-            <div className="kpi-value">${totalRevenue.toLocaleString()}</div>
+            <div className="kpi-value">₹{totalRevenue.toLocaleString()}</div>
             <div className="kpi-change" style={{ color: 'var(--accent-emerald)' }}>
               <TrendingUp size={16} /> +12.4% {t('comparePrevMonth')}
             </div>
@@ -225,7 +225,7 @@ export default function Dashboard({ database, t, lang }) {
           <div className="kpi-details">
             <h3>{t('netProfit')}</h3>
             <div className="kpi-value" style={{ color: netProfit >= 0 ? 'var(--text-primary)' : 'var(--accent-rose)' }}>
-              {netProfit >= 0 ? '' : '-'}${Math.abs(netProfit).toLocaleString()}
+              {netProfit >= 0 ? '' : '-'}₹{Math.abs(netProfit).toLocaleString()}
             </div>
             <div className="kpi-change" style={{ color: netProfit >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>
               {netProfit >= 0 ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
@@ -255,7 +255,7 @@ export default function Dashboard({ database, t, lang }) {
         <div className="glass-card kpi-card">
           <div className="kpi-details">
             <h3>{t('totalExpenses')}</h3>
-            <div className="kpi-value">${totalExp.toLocaleString()}</div>
+            <div className="kpi-value">₹{totalExp.toLocaleString()}</div>
             <div className="kpi-change" style={{ color: 'var(--accent-rose)' }}>
               <TrendingUp size={16} /> +4.8% {t('comparePrevMonth')}
             </div>

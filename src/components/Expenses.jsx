@@ -20,7 +20,7 @@ export default function Expenses({ database, setDatabase, t, lang }) {
       category: "Inventory",
       amount: "850.00",
       date: new Date().toISOString().slice(0, 10),
-      rawText: "INVOICE #SC-9810\nDate: 2026-07-02\nSTAR COFFEE IMPORTERS LTD\nItems:\n- 100kg Arabica Beans - $600.00\n- 50kg Robusta Beans - $250.00\nSUBTOTAL: $850.00\nTAX (GST 0%): $0.00\nTOTAL AMOUNT DUE: $850.00\nThank you for your business!"
+      rawText: "INVOICE #SC-9810\nDate: 2026-07-02\nSTAR COFFEE IMPORTERS LTD\nItems:\n- 100kg Arabica Beans - ₹600.00\n- 50kg Robusta Beans - ₹250.00\nSUBTOTAL: ₹850.00\nTAX (GST 0%): ₹0.00\nTOTAL AMOUNT DUE: ₹850.00\nThank you for your business!"
     },
     {
       name: "City Power & Light Receipt",
@@ -28,7 +28,7 @@ export default function Expenses({ database, setDatabase, t, lang }) {
       category: "Utilities",
       amount: "320.40",
       date: new Date().toISOString().slice(0, 10),
-      rawText: "CITY POWER & LIGHT CO.\nPayment Receipt\nAccount: #8871-002\nTransaction: #TXN-7718A\nElectricity usage (June): $271.53\nGST (18%): $48.87\nTOTAL PAID: $320.40\nStatus: PAID - AutoDebit"
+      rawText: "CITY POWER & LIGHT CO.\nPayment Receipt\nAccount: #8871-002\nTransaction: #TXN-7718A\nElectricity usage (June): ₹271.53\nGST (18%): ₹48.87\nTOTAL PAID: ₹320.40\nStatus: PAID - AutoDebit"
     },
     {
       name: "Local Milk Supply Bill",
@@ -36,7 +36,7 @@ export default function Expenses({ database, setDatabase, t, lang }) {
       category: "Inventory",
       amount: "180.00",
       date: new Date().toISOString().slice(0, 10),
-      rawText: "DAILY FRESH MILK DIARIES\nBILL TO: Brewtopia Cafe\nInvoice No: 442\nDetails:\n60 Liters Whole Milk @ $3.00/L = $180.00\nNet Total: $180.00\nCGST 2.5%: $4.50\nSGST 2.5%: $4.50\nGross Total: $189.00\nCash Payment Received: $180.00"
+      rawText: "DAILY FRESH MILK DIARIES\nBILL TO: Brewtopia Cafe\nInvoice No: 442\nDetails:\n60 Liters Whole Milk @ ₹3.00/L = ₹180.00\nNet Total: ₹180.00\nCGST 2.5%: ₹4.50\nSGST 2.5%: ₹4.50\nGross Total: ₹189.00\nCash Payment Received: ₹180.00"
     }
   ];
 
@@ -55,7 +55,7 @@ export default function Expenses({ database, setDatabase, t, lang }) {
       }
     }
 
-    // Guess total amount by matching numbers near "total", "paid", or "$"
+    // Guess total amount by matching numbers near "total", "paid", or "₹"
     const totalRegex = /(?:total|paid|due|amount)\D*(\d+(?:\.\d{2})?)/i;
     for (let line of lines) {
       const match = line.match(totalRegex);
@@ -66,7 +66,7 @@ export default function Expenses({ database, setDatabase, t, lang }) {
 
     // Default fallbacks if regex missed
     if (!detectedTotal) {
-      const moneyRegex = /\$\s*(\d+(?:\.\d{2})?)/;
+      const moneyRegex = /(?:₹|\$)\s*(\d+(?:\.\d{2})?)/;
       for (let line of lines) {
         const match = line.match(moneyRegex);
         if (match) {
@@ -269,7 +269,7 @@ export default function Expenses({ database, setDatabase, t, lang }) {
             {ocrResult && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem', borderRadius: '10px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--card-border)' }}>
                 <div style={{ fontSize: '0.8rem', color: 'var(--accent-emerald)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <Sparkles size={14} /> {t('ocrSuccess')} ${ocrResult.parsed.amount}
+                  <Sparkles size={14} /> {t('ocrSuccess')} ₹{ocrResult.parsed.amount}
                 </div>
                 <div style={{ fontSize: '0.75rem', maxHeight: '100px', overflowY: 'auto', background: '#070a13', padding: '0.5rem', borderRadius: '6px', fontFamily: 'monospace', color: 'var(--text-secondary)', whiteSpace: 'pre-wrap' }}>
                   {ocrResult.rawText}
@@ -314,7 +314,7 @@ export default function Expenses({ database, setDatabase, t, lang }) {
                 </div>
 
                 <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label className="form-label">{t('amount')} ($)</label>
+                  <label className="form-label">{t('amount')} (₹)</label>
                   <input 
                     type="number" 
                     step="any"
@@ -379,7 +379,7 @@ export default function Expenses({ database, setDatabase, t, lang }) {
                       </span>
                     </td>
                     <td style={{ fontWeight: 600, color: 'var(--accent-rose)' }}>
-                      -${exp.amount.toFixed(2)}
+                      -₹{exp.amount.toFixed(2)}
                     </td>
                     <td>{exp.date}</td>
                     <td style={{ textAlign: 'right' }}>
