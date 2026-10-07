@@ -19,7 +19,7 @@ export default function Marketing({ database, apiKey, t, lang }) {
     
     if (lang === 'hi') {
       if (channel === 'whatsapp') {
-        return `📣 *विशेष ऑफर!* 📣\n\nप्रिय ग्राहक, *${subject}* का आनंद लें! \n\n*ऑफर विवरण:* ${details}\n\nआज ही हमारी शॉप पर पधारें या ऑर्डर करने के लिए इस लिंक पर क्लिक करें: https://wa.me/ourbusiness\n\n_अस्वीकरण: सीमित समय का ऑफर!_`;
+        return `📣 *विशेष ऑफर!* 📣\n\nप्रिय ग्राहक, *${subject}* का आनंद लें! \n\n*ऑफर विवरण:* ${details}\n\nआज ही हमारी शॉप पर पधारें या ऑर्डर करने के लिए इस लिंक पर क्लिक करें: https://wa.me/918356077864\n\n_अस्वीकरण: सीमित समय का ऑफर!_`;
       }
       if (channel === 'sms') {
         return `ऑफर अलर्ट! ${subject} पर विशेष डील। विवरण: ${details}. आज ही Brewtopia कैफ़े आएं! अनसब्सक्राइब करने के लिए STOP लिखें।`;
@@ -27,7 +27,7 @@ export default function Marketing({ database, apiKey, t, lang }) {
       return `विषय: ☕ आपके लिए विशेष उपहार - ${subject} पर बड़ा ऑफर!\n\nप्रिय बिज़नेस पार्टनर,\n\nहमें आपके लिए ${subject} पर एक रोमांचक घोषणा करते हुए बेहद खुशी हो रही है।\n\nऑफर विवरण: ${details}\n\nआज ही हमारी दुकान पर आएं और इसका लाभ उठाएं।\n\nसादर,\nBrewtopia टीम`;
     } else if (lang === 'es') {
       if (channel === 'whatsapp') {
-        return `📣 *¡Gran Promoción de ${subject}!* 📣\n\nEstimado cliente, disfrute de nuestra especialidad en *${subject}*.\n\n*Detalles de la oferta:* ${details}\n\nVisítenos hoy o haga su pedido aquí: https://wa.me/negocio\n\n_¡Oferta por tiempo limitado!_`;
+        return `📣 *¡Gran Promoción de ${subject}!* 📣\n\nEstimado cliente, disfrute de nuestra especialidad en *${subject}*.\n\n*Detalles de la oferta:* ${details}\n\nVisítenos hoy o haga su pedido aquí: https://wa.me/918356077864\n\n_¡Oferta por tiempo limitado!_`;
       }
       if (channel === 'sms') {
         return `¡Alerta de Promoción! Gran descuento en ${subject}. Detalles: ${details}. ¡Visítenos hoy en Brewtopia!`;
@@ -36,7 +36,7 @@ export default function Marketing({ database, apiKey, t, lang }) {
     } else {
       // English
       if (channel === 'whatsapp') {
-        return `📣 *Exclusive Offer: ${subject}!* 📣\n\nHi there! We are excited to present our special campaign for *${subject}*.\n\n*Offer Details:* ${details}\n\nDrop by today or click here to order directly: https://wa.me/ourbusiness\n\n_Hurry, this offer is valid for a limited time only!_`;
+        return `📣 *Exclusive Offer: ${subject}!* 📣\n\nHi there! We are excited to present our special campaign for *${subject}*.\n\n*Offer Details:* ${details}\n\nDrop by today or click here to order directly: https://wa.me/918356077864\n\n_Hurry, this offer is valid for a limited time only!_`;
       }
       if (channel === 'sms') {
         return `Promo Alert! Get ${subject} today. Details: ${details}. Don't miss out, visit Brewtopia Café today! Text STOP to opt-out.`;

@@ -139,8 +139,8 @@ _Sent via AI Business Growth Copilot_`;
                 <input 
                   type="tel" 
                   className="form-control" 
-                  defaultValue="+91 98765 43210" 
-                  placeholder="+1 (555) 000-0000"
+                  defaultValue="+91 8356077864" 
+                  placeholder="+91 8356077864"
                 />
               </div>
             </div>
