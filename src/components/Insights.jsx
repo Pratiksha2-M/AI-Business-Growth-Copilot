@@ -5,6 +5,7 @@ export default function Insights({ database, t, lang }) {
   const { sales, expenses, inventory } = database;
   const [alertsEnabled, setAlertsEnabled] = useState(true);
   const [frequency, setFrequency] = useState('weekly');
+  const [phoneNumber, setPhoneNumber] = useState('918356077864');
   const [testSent, setTestSent] = useState(false);
 
   // Compute live data for WhatsApp preview
@@ -58,6 +59,9 @@ _Sent via AI Business Growth Copilot_`;
 
   const handleSendTest = () => {
     setTestSent(true);
+    const cleanNum = phoneNumber.replace(/[^0-9]/g, '') || '918356077864';
+    const text = encodeURIComponent(getWhatsAppMessageText());
+    window.open(`https://api.whatsapp.com/send?phone=${cleanNum}&text=${text}`, '_blank');
     setTimeout(() => setTestSent(false), 3000);
   };
 
@@ -139,7 +143,8 @@ _Sent via AI Business Growth Copilot_`;
                 <input 
                   type="tel" 
                   className="form-control" 
-                  defaultValue="+91 8356077864" 
+                  value={phoneNumber} 
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="+91 8356077864"
                 />
               </div>
@@ -149,10 +154,8 @@ _Sent via AI Business Growth Copilot_`;
               type="button" 
               className="btn btn-primary"
               onClick={handleSendTest}
-              disabled={testSent}
             >
-              {testSent ? <Check size={16} /> : <Send size={16} />}
-              {testSent ? 'Test Message Dispatched!' : 'Send Test WhatsApp Alert'}
+              <Send size={16} /> Send Real WhatsApp Alert to {phoneNumber}
             </button>
           </div>
           

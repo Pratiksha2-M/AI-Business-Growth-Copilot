@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Megaphone, Copy, Check, Sparkles } from 'lucide-react';
+import { Megaphone, Copy, Check, Sparkles, Send } from 'lucide-react';
 
 export default function Marketing({ database, apiKey, t, lang }) {
   const [form, setForm] = useState({
@@ -99,6 +99,11 @@ Make it engaging, include call to action, and format it cleanly using markdown/e
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleSendWhatsApp = () => {
+    const text = encodeURIComponent(result);
+    window.open(`https://api.whatsapp.com/send?phone=918356077864&text=${text}`, '_blank');
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       {/* Top Header */}
@@ -185,10 +190,15 @@ Make it engaging, include call to action, and format it cleanly using markdown/e
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--card-border)', paddingBottom: '0.75rem' }}>
             <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)' }}>{t('generatedCampaign')}</h3>
             {result && (
-              <button className="btn btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }} onClick={handleCopy}>
-                {copied ? <Check size={14} style={{ color: 'var(--accent-emerald)' }} /> : <Copy size={14} />}
-                {copied ? 'Copied!' : 'Copy to Clipboard'}
-              </button>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button className="btn btn-primary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }} onClick={handleSendWhatsApp}>
+                  <Send size={14} /> Send to WhatsApp
+                </button>
+                <button className="btn btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }} onClick={handleCopy}>
+                  {copied ? <Check size={14} style={{ color: 'var(--accent-emerald)' }} /> : <Copy size={14} />}
+                  {copied ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
             )}
           </div>
 
