@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Package, AlertCircle, Plus, Edit2, RotateCcw } from 'lucide-react';
+import { Package, AlertCircle, Plus, RotateCcw, ShoppingCart } from 'lucide-react';
 
 export default function Inventory({ database, setDatabase, t, lang }) {
   const { inventory } = database;
@@ -69,13 +69,25 @@ export default function Inventory({ database, setDatabase, t, lang }) {
     }));
   };
 
-  // Quick Restock helper
+  // Quick Restock helper (Supplier Purchase +)
   const handleQuickRestock = (itemId, amount) => {
     setDatabase(prev => ({
       ...prev,
       inventory: prev.inventory.map(item => 
         item.id === itemId 
           ? { ...item, stock: item.stock + amount }
+          : item
+      )
+    }));
+  };
+
+  // Record Customer Sale helper (Customer Purchase -)
+  const handleRecordSale = (itemId, amount) => {
+    setDatabase(prev => ({
+      ...prev,
+      inventory: prev.inventory.map(item => 
+        item.id === itemId 
+          ? { ...item, stock: Math.max(0, parseFloat((item.stock - amount).toFixed(1))) }
           : item
       )
     }));
@@ -160,7 +172,7 @@ export default function Inventory({ database, setDatabase, t, lang }) {
       {/* Inventory List Card */}
       <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Package size={22} className="brand-icon" /> Stock Status
+          <Package size={22} className="brand-icon" /> Stock Status & Counter POS Controls
         </h3>
         
         <div className="table-container">
@@ -173,7 +185,7 @@ export default function Inventory({ database, setDatabase, t, lang }) {
                 <th>Min Alert level</th>
                 <th>{t('daysRemaining')}</th>
                 <th>{t('predictedStatus')}</th>
-                <th style={{ textAlign: 'right' }}>Actions</th>
+                <th style={{ textAlign: 'right' }}>Counter & Supplier Controls</th>
               </tr>
             </thead>
             <tbody>
@@ -183,7 +195,7 @@ export default function Inventory({ database, setDatabase, t, lang }) {
                 return (
                   <tr key={item.id} style={{ borderLeft: item.stock < item.minStock ? '3px solid var(--accent-rose)' : 'none' }}>
                     <td style={{ fontWeight: 600 }}>{item.name}</td>
-                    <td>{item.stock}</td>
+                    <td style={{ fontSize: '1rem', fontWeight: 'bold' }}>{item.stock}</td>
                     <td>{item.dailyUsage} / day</td>
                     <td>{item.minStock}</td>
                     <td style={{ fontWeight: 600 }}>
@@ -193,17 +205,28 @@ export default function Inventory({ database, setDatabase, t, lang }) {
                       <span className={`badge ${status.badgeClass}`}>{status.text}</span>
                     </td>
                     <td style={{ textAlign: 'right' }}>
-                      <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                      <div style={{ display: 'flex', gap: '0.4rem', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+                        {/* Sell Customer Button (Minus) */}
+                        <button 
+                          className="btn btn-danger" 
+                          style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                          onClick={() => handleRecordSale(item.id, 1)}
+                          title="Simulate Customer Buying 1 Unit"
+                        >
+                          <ShoppingCart size={12} /> Sell 1 Unit (-1)
+                        </button>
+
+                        {/* Restock Supplier Buttons (Plus) */}
                         <button 
                           className="btn btn-secondary" 
-                          style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }}
+                          style={{ padding: '0.3rem 0.5rem', fontSize: '0.75rem' }}
                           onClick={() => handleQuickRestock(item.id, 10)}
                         >
                           +10 Stock
                         </button>
                         <button 
                           className="btn btn-secondary" 
-                          style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }}
+                          style={{ padding: '0.3rem 0.5rem', fontSize: '0.75rem' }}
                           onClick={() => handleQuickRestock(item.id, 50)}
                         >
                           +50 Stock
